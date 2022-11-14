@@ -14,9 +14,8 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
-    @Transactional
     @Override
     public void add(User user) {
         entityManager.persist(user);
@@ -32,13 +31,11 @@ public class UserDaoImpl implements UserDao {
         return entityManager.createQuery("from User").getResultList();
     }
 
-    @Transactional
     @Override
     public void update(User user) {
         entityManager.merge(user);
     }
 
-    @Transactional
     @Override
     public void delete(User user) {
         entityManager.remove(entityManager.contains(user) ? user : entityManager.merge(user));
